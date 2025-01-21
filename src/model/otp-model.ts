@@ -4,7 +4,6 @@ import { IOTP } from "../interface/entity-interface";
 const otpSchema = new Schema<IOTP>({
     email: {
         type: String,
-        unique: true,
         required: true,
         trim: true
     },
@@ -19,5 +18,7 @@ const otpSchema = new Schema<IOTP>({
         expires: 60 * 2
     }
 }, { timestamps: false });
+
+otpSchema.index({email:1})
 
 export const OTP = model<IOTP>('OTP', otpSchema)

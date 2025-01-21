@@ -15,13 +15,12 @@ export class MailService implements IMailService {
     async sendMail(email: string): Promise<IResponse> {
         try {
             const response = await this.otpService.create(email)
-            const info = await this.transporter.sendMail({
-                from: 'Docty Doctor',
+             await this.transporter.sendMail({
+                from: 'Dutty Doctor',
                 to: email,
                 subject: 'OTP Verification',
                 html: this.generateTemplate(response.data.otp)
             });
-            console.log('email info:', info)
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'otp send to the mail successfully'
@@ -93,7 +92,7 @@ export class MailService implements IMailService {
                     style="display: inline-block; background-color: #1D267E;  letter-spacing: 2px; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
                    ${otp}
                 </p>
-                <p style="font-family:Georgia, serif;font-weight: bolder;">Expires in: 10 minutes</p>
+                <p style="font-family:Georgia, serif;font-weight: bolder;">Expires in: 2 minutes</p>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import { HttpStatusCode, ResponseStatus } from "../constant/enum";
 import { CustomError } from "../utils/custom-error";
 
 export const errorMiddleWare = (error: Error, req: Request, res: Response, next: NextFunction) => {
+    console.log(error)
     if (error instanceof CustomError) {
         const err = error.field ? { [error.field]: error.message } : error.err
         return res.status(error.statusCode).json({

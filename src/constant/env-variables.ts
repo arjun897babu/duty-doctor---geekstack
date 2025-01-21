@@ -23,7 +23,6 @@ export const serverConfig = Object.freeze({
     nodemailer:{
         password:process.env.GOOGLE_PASSWORD,
         email:process.env.GOOGLE_EMAIL,
-        service:process.env.GOOGLE_SERVICE,
-        host:process.env.HOST
+        host:process.env.GOOGLE_HOST,
     }
 })
