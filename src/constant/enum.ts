@@ -20,7 +20,14 @@ export enum TokenType {
     REFRESH = 'refresh'
 }
 
-export enum ResponseStatus{
-    SUCCESS='Success',
-    ERROR='Error',
+export enum ResponseStatus {
+    SUCCESS = 'Success',
+    ERROR = 'Error',
+}
+
+export enum DoctorDegree {
+    MBBS = 'MBBS',
+    PG = 'PG',
+    SUPER_SPECIALITY = "Super Speciality",
+    FELLOWSHIP = 'Fellowship'
 }

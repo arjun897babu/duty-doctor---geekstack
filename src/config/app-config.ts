@@ -22,7 +22,10 @@ App.use(express.json())
 App.use(express.urlencoded({ extended: false }))
 
 App.use(morgan('dev'));
-App.use('/doctor', doctorRoutes)
+
+App.use('/api/doctor', doctorRoutes);
+App.use('/api/mail', doctorRoutes);
+
 App.use(errorMiddleWare)
 App.use('*', wildCardMiddleWare)
 

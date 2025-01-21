@@ -1,10 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { TokenType } from "../constant/enum"
-
-export interface IBcryptService {
-    hash(plainPassword: string): Promise<string>
-    compare(plainPassword: string, hashedPassword: string): Promise<boolean>
-}
+import { ICreateOTPResponse, ICreateUserResponse, IGetProfileResponse, IResponse } from "./response-interface"
+import { ICreateDoctorPayload, IOTPPayload } from "./payload"
 
 export interface IJWTService {
     generateToken(payload: JwtPayload, tokenType: TokenType): string
@@ -12,8 +9,15 @@ export interface IJWTService {
 }
 
 export interface IDoctorService {
-
+    create(payload: ICreateDoctorPayload): Promise<ICreateUserResponse>
+    logIn(email: string): Promise<IResponse>
+    getProfile(userId: string): Promise<IGetProfileResponse>
 }
 export interface IMailService {
-
+    sendMail(email: string): Promise<IResponse>
+    verifyEmail(payload: IOTPPayload): Promise<IResponse>
+}
+export interface IOTPService {
+    create(email: string): Promise<ICreateOTPResponse>
+    verifyOTP(payload: IOTPPayload): Promise<IResponse>
 }
