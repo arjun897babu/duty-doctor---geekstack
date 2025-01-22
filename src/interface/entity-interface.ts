@@ -4,23 +4,21 @@ import { DoctorDegree } from "../constant/enum";
 export interface IOTP extends Document {
     email: string,
     otp: number,
-    expireAt: Date
+    createdAt: Date
 }
 
 export interface IEduCommon {
     degree: DoctorDegree,
     country: string;
-    instituationName: string;
-    courseCompleted: boolean,
+    instituteName: string;
+    completion: string,
 }
 
 export interface IEduSpecific {
-    pgDegree: string; //for degree = pg
-    speciality: string;//for degree = pg
+    speciality: string;
     fellowShip: string; //for degree = fellow ship
-    superSpeciality: string // for degree = super speciality
     MedicalRegistrationNumber: string,//for completed degree
-    year: number;// for uncompleted degree
+    year: string;// for uncompleted degree
 }
 
 export interface IEducation extends IEduCommon, Partial<IEduSpecific> {}

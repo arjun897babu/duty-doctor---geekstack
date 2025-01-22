@@ -5,7 +5,7 @@ export interface IResponse {
     status: ResponseStatus,
     message: string
 }
-export interface ICreateUserResponse extends IResponse {
+export interface IDoctorAuthResponse extends IResponse {
     data: {
         token: string
     }

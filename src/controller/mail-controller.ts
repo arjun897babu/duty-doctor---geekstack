@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IMailService } from "../interface/service-inteface";
 import { HttpStatusCode } from "../constant/enum";
+import { convertToNumber } from "../utils/helper";
 
 export class MailController {
     private mailService: IMailService
@@ -20,7 +21,7 @@ export class MailController {
     async verifyMail(req: Request, res: Response, next: NextFunction) {
         try {
             const { email, otp } = req.body
-            const response = await this.mailService.verifyEmail({ email, otp })
+            const response = await this.mailService.verifyEmail({ email, otp:convertToNumber(otp) })
             return res.status(HttpStatusCode.OK).json(response)
         } catch (error) {
             next(error)

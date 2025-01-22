@@ -12,31 +12,26 @@ const educationSchema = new Schema<IEducation>({
         type: String,
         required: true,
     },
-    courseCompleted: {
-        type: Boolean,
+    completion: {
+        type: String,
         required: true,
     },
     fellowShip: {
         type: String,
     },
-    instituationName: {
+    instituteName: {
         type: String,
         required: true,
     },
     MedicalRegistrationNumber: {
         type: String,
     },
-    pgDegree: {
-        type: String,
-    },
+
     speciality: {
         type: String,
     },
-    superSpeciality: {
-        type: String,
-    },
     year: {
-        type: Number,
+        type: String,
     }
 });
 

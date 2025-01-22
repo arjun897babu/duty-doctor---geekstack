@@ -1,6 +1,6 @@
 import { HttpStatusCode, ResponseStatus, TokenType } from "../constant/enum";
-import { ICreateDoctorPayload } from "../interface/payload";
-import { ICreateUserResponse, IGetProfileResponse, IResponse } from "../interface/response-interface";
+import { ICreateDoctorPayload, IOTPPayload } from "../interface/payload";
+import { IDoctorAuthResponse, IGetProfileResponse, IResponse } from "../interface/response-interface";
 import { IDoctorService, IJWTService, IMailService } from "../interface/service-inteface";
 import { Doctors } from "../model/doctor-model";
 import { CustomError } from "../utils/custom-error";
@@ -13,7 +13,7 @@ export class DoctorService implements IDoctorService {
         this.mailService = mailService
 
     }
-    async create(payload: ICreateDoctorPayload): Promise<ICreateUserResponse> {
+    async create(payload: ICreateDoctorPayload): Promise<IDoctorAuthResponse> {
         try {
             const newDoctor = await Doctors.create(payload)
             const token = this.jwtService.generateToken({ uId: newDoctor.uId }, TokenType.ACCESS)
@@ -28,22 +28,43 @@ export class DoctorService implements IDoctorService {
         } catch (error) {
             throw error
         }
-    }
-    async logIn(email: string): Promise<IResponse> {
+    };
+
+    async logIn(payload: IOTPPayload): Promise<IDoctorAuthResponse> {
         try {
+            const doctor = await Doctors.findOne({ email: payload.email }).lean()
+            if (!doctor) {
+                throw new CustomError('account not found', HttpStatusCode.NOT_FOUND, 'email')
+            }
+
+            await this.mailService.verifyEmail(payload);
+            const token = this.jwtService.generateToken({ uId: doctor.uId }, TokenType.ACCESS)
 
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'user logged  successfully',
+                data: {
+                    token
+                }
             }
 
         } catch (error) {
             throw error
         }
     };
-    
 
+    async getOTP(email: string): Promise<IResponse> {
+        const doctor = await Doctors.findOne({ email }).lean()
+        if (!doctor) {
+            throw new CustomError('account not found', HttpStatusCode.NOT_FOUND, 'email')
+        }
 
+        await this.mailService.sendMail(email);
+        return {
+            status: ResponseStatus.SUCCESS,
+            message: 'otp send to the mail successfully '
+        }
+    }
 
     async getProfile(userId: string): Promise<IGetProfileResponse> {
         try {

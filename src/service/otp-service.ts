@@ -26,14 +26,14 @@ export class OTPService implements IOTPService {
 
     async verifyOTP(payload: IOTPPayload): Promise<IResponse> {
         try {
-            const exist = await OTP.findOne({ email: payload.email }).lean();
+            const exist = await OTP.findOne({ email: payload.email }).sort({ createdAt: -1 }).lean();
             if (!exist) {
                 throw new CustomError('OTP expired', HttpStatusCode.NOT_FOUND, 'OTP')
             }
-            if (exist.otp !== payload.otp) {
+            if (exist.otp !==payload.otp) {
                 throw new CustomError('Invalid OTP', HttpStatusCode.BAD_REQUEST, 'OTP')
-
             };
+            
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'OTP verification completed'

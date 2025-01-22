@@ -1,6 +1,6 @@
 import { JwtPayload } from "jsonwebtoken"
 import { TokenType } from "../constant/enum"
-import { ICreateOTPResponse, ICreateUserResponse, IGetProfileResponse, IResponse } from "./response-interface"
+import { ICreateOTPResponse, IDoctorAuthResponse, IGetProfileResponse, IResponse } from "./response-interface"
 import { ICreateDoctorPayload, IOTPPayload } from "./payload"
 
 export interface IJWTService {
@@ -9,8 +9,9 @@ export interface IJWTService {
 }
 
 export interface IDoctorService {
-    create(payload: ICreateDoctorPayload): Promise<ICreateUserResponse>
-    logIn(email: string): Promise<IResponse>
+    create(payload: ICreateDoctorPayload): Promise<IDoctorAuthResponse>
+    logIn(payload: IOTPPayload): Promise<IDoctorAuthResponse>
+    getOTP(email: string): Promise<IResponse>
     getProfile(userId: string): Promise<IGetProfileResponse>
 }
 export interface IMailService {
