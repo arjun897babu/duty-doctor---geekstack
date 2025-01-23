@@ -9,7 +9,9 @@ export enum HttpStatusCode {
     CONFLICT = 409,
     CONTENT_TOO_LARGE = 413
 }
-
+export enum NODE_APP{
+    DUTY_DOCTOR='dutyDoctor'
+}
 
 export enum Role {
     DOCTOR = 'doctor',

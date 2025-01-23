@@ -33,7 +33,7 @@ export class OTPService implements IOTPService {
             if (exist.otp !==payload.otp) {
                 throw new CustomError('Invalid OTP', HttpStatusCode.BAD_REQUEST, 'OTP')
             };
-            
+
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'OTP verification completed'

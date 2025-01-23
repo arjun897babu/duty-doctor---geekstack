@@ -16,7 +16,7 @@ export class DoctorService implements IDoctorService {
     async create(payload: ICreateDoctorPayload): Promise<IDoctorAuthResponse> {
         try {
             const newDoctor = await Doctors.create(payload)
-            const token = this.jwtService.generateToken({ uId: newDoctor.uId }, TokenType.ACCESS)
+            const token = this.jwtService.generateToken({ uId: newDoctor.uId,role:'doctor' }, TokenType.ACCESS)
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'account created successfully',
@@ -32,14 +32,15 @@ export class DoctorService implements IDoctorService {
 
     async logIn(payload: IOTPPayload): Promise<IDoctorAuthResponse> {
         try {
+            console.log(payload)
             const doctor = await Doctors.findOne({ email: payload.email }).lean()
             if (!doctor) {
                 throw new CustomError('account not found', HttpStatusCode.NOT_FOUND, 'email')
             }
 
             await this.mailService.verifyEmail(payload);
-            const token = this.jwtService.generateToken({ uId: doctor.uId }, TokenType.ACCESS)
-
+            const token = this.jwtService.generateToken({ uId: doctor.uId,role:'doctor' }, TokenType.ACCESS)
+ 
             return {
                 status: ResponseStatus.SUCCESS,
                 message: 'user logged  successfully',

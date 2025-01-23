@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IJWTService } from "../interface/service-inteface";
 import { CustomError } from "../utils/custom-error";
-import { HttpStatusCode, TokenType } from "../constant/enum";
+import { HttpStatusCode, NODE_APP, TokenType } from "../constant/enum";
 import { JwtPayload } from "jsonwebtoken";
 
 export class AuthMiddleWare {
@@ -15,7 +15,7 @@ export class AuthMiddleWare {
             console.log('authentication middle ware is called')
             const token = this.extractToken(req);
             const decoded = this.verifyAndDecode(token);
-            req.params.userId = decoded.uId;
+            req.params.doctorId = decoded.uId;
             return next();
 
         } catch (error) {
@@ -25,7 +25,7 @@ export class AuthMiddleWare {
 
     private extractToken(req: Request): string {
         try {
-            const token = req.headers["authorization"]?.split(" ")[1];
+            const token = req.cookies[NODE_APP.DUTY_DOCTOR];
             if (token) {
                 return token
             }
@@ -38,7 +38,7 @@ export class AuthMiddleWare {
     private verifyAndDecode(token: string): JwtPayload {
         try {
             const decoded = this.jwtService.verifyToken(token,TokenType.ACCESS) as JwtPayload;
-            if (decoded && decoded.role === 'user') {
+            if (decoded && decoded.role === 'doctor') {
                 return decoded
             }
             throw new CustomError('forebidden: invalid token ', HttpStatusCode.FORBIDDEN, 'token')

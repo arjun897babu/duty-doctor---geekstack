@@ -10,7 +10,7 @@ import mailRoutes from '../routes/mail-routes'
 const App = express();
 
 App.use(cookieParser())
-
+console.log(serverConfig)
 App.use(
     Cors({
         origin: serverConfig.origin,

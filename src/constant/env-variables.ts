@@ -11,11 +11,11 @@ export const serverConfig = Object.freeze({
     origin: process.env.ORIGIN!,
     jwt: {
         [TokenType.ACCESS]: {
-            secret: process.env.JWT_REFRESH_EXPIRE!,
+            secret: process.env.JWT_ACCESS_SECRET!,
             expire: process.env.JWT_ACCESS_EXPIRE!,
         },
         [TokenType.REFRESH]: {
-            secret: process.env.JWT_REFRESH_EXPIRE!,
+            secret: process.env.JWT_REFRESH_SECRET!,
             expire: process.env.JWT_REFRESH_EXPIRE!
         }
     },
