@@ -28,10 +28,10 @@ export class OTPService implements IOTPService {
         try {
             const exist = await OTP.findOne({ email: payload.email }).sort({ createdAt: -1 }).lean();
             if (!exist) {
-                throw new CustomError('OTP expired', HttpStatusCode.NOT_FOUND, 'OTP')
+                throw new CustomError('OTP expired', HttpStatusCode.NOT_FOUND, 'otp')
             }
             if (exist.otp !==payload.otp) {
-                throw new CustomError('Invalid OTP', HttpStatusCode.BAD_REQUEST, 'OTP')
+                throw new CustomError('Invalid OTP', HttpStatusCode.BAD_REQUEST, 'otp')
             };
 
             return {
